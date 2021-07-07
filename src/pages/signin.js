@@ -5,6 +5,8 @@ import axios from 'axios';
 import { getUser, setUserSession } from '../helpers/auth';
 import { apiUrl } from '../helpers/constants';
 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 
 function SignIn(props) {
     const username = useFormInput('');
