@@ -3,7 +3,7 @@ import { removeUserSession } from '../helpers/auth';
 
 function Dash(props) {
     const user = props.location.state.user;
-    console.log('user', user);
+    // console.log('user', user);
 
     return (
         <div className="bg-light w-100 h-100 dash-body">
@@ -20,7 +20,7 @@ function Dash(props) {
                             <div className="col-md-6">
                                 <div className="profile-head">
                                     <h5>
-                                        {user.name.first}&nbsp;{user.name.last}
+                                        {user.name.title}&nbsp;{user.name.first}&nbsp;{user.name.last}
                                     </h5>
                                     <h6>
                                         {user.login.uuid}

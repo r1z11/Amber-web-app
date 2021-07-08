@@ -40,13 +40,13 @@ function SignIn(props) {
         if (validateUsername(username.value) && validatePassword(password.value)) {
             axios.post(apiUrl + '/users/login', { username: username.value, password: password.value }).then(response => {
                 setLoading(false);
-                console.log('response', response);
+                // console.log('response', response);
                 let data = response.data;
 
                 if (Object.keys(data).length > 0) {
                     let userExists = getUser();
                     if (userExists) {
-                        console.log('if', userExists);
+                        // console.log('if', userExists);
                         props.history.push({
                             pathname: '/dash',
                             state: { user: userExists }
@@ -54,7 +54,7 @@ function SignIn(props) {
                     } else {
                         setUserSession(response.data);
                         let newUser = getUser();
-                        console.log('else', newUser);
+                        // console.log('else', newUser);
                         props.history.push({
                             pathname: '/dash',
                             state: { user: newUser }
@@ -64,7 +64,7 @@ function SignIn(props) {
                     alert("Invalid credentials! Please check your username and password.");
             }).catch(error => {
                 setLoading(false);
-                console.log(error);
+                // console.log(error);
                 alert("An error occured. Please try again later.");
             });
         } else

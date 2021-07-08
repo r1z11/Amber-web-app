@@ -1,3 +1,10 @@
+# Demo
+
+https://r1z11.github.io/Amber-web-app
+
+username - tinykoala839
+password - wp2003wp
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
