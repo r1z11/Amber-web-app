@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getUser, setUserSession } from '../helpers/auth';
 import { apiUrl } from '../helpers/constants';
 
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 
 function SignIn(props) {
@@ -40,12 +40,28 @@ function SignIn(props) {
         if (validateUsername(username.value) && validatePassword(password.value)) {
             axios.post(apiUrl + '/users/login', { username: username.value, password: password.value }).then(response => {
                 setLoading(false);
-                console.log(response);
-                setUserSession(response.data);
-                if (getUser)
-                    props.history.push('/dashboard');
-                else
-                    alert("An error occured. Could not save user data.\nPlease try to sign in again.");
+                console.log('response', response);
+                let data = response.data;
+
+                if (Object.keys(data).length > 0) {
+                    let userExists = getUser();
+                    if (userExists) {
+                        console.log('if', userExists);
+                        props.history.push({
+                            pathname: '/dash',
+                            state: { user: userExists }
+                        });
+                    } else {
+                        setUserSession(response.data);
+                        let newUser = getUser();
+                        console.log('else', newUser);
+                        props.history.push({
+                            pathname: '/dash',
+                            state: { user: newUser }
+                        });
+                    }
+                } else
+                    alert("Invalid credentials! Please check your username and password.");
             }).catch(error => {
                 setLoading(false);
                 console.log(error);
@@ -57,7 +73,7 @@ function SignIn(props) {
 
     return (
         <main className="form-signin">
-            <form>
+            <form className="mt-5">
                 <img className="mb-4" src={logo} alt="logo" width="72" height="57" />
                 <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
 
@@ -76,18 +92,20 @@ function SignIn(props) {
                     </p> : null}
                 </div>
 
-                <div className="checkbox mb-3">
+                {/* <div className="checkbox mb-3">
                     <label>
                         <input type="checkbox" value="remember-me" /> Remember me
                     </label>
-                </div>
+                </div> */}
                 {/* <button className="w-100 btn btn-lg btn-primary" type="button" onClick={handleLogin}>Sign in</button> */}
-                <button class="w-100 btn btn-lg btn-primary" type="button" onClick={handleLogin} disabled={loading}>
+                <button className="w-100 btn btn-lg btn-primary" type="button" onClick={handleLogin} disabled={loading}>
                     {loading ? 'Loading... ' : 'Sign in '}
-                    {loading ? <span class="spinner-border spinner-border float-end" role="status" aria-hidden="true"></span> : null}
+                    {loading ? <span className="spinner-border spinner-border float-end" role="status" aria-hidden="true"></span> : null}
                 </button>
-                <p>tinykoala839</p>
-                <p>wp2003wp</p>
+                <div className="row mt-3">
+                    <p className="col-6 text-muted text-right">tinykoala839</p>
+                    <p className="col-6 text-muted text-left">wp2003wp</p>
+                </div>
                 <p className="mt-5 mb-3 text-muted">&copy; Amber Software Technical Assessment. 2021</p>
             </form>
         </main>
