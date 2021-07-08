@@ -86,6 +86,8 @@ function SignIn(props) {
                     {loading ? 'Loading... ' : 'Sign in '}
                     {loading ? <span class="spinner-border spinner-border float-end" role="status" aria-hidden="true"></span> : null}
                 </button>
+                <p>tinykoala839</p>
+                <p>wp2003wp</p>
                 <p className="mt-5 mb-3 text-muted">&copy; Amber Software Technical Assessment. 2021</p>
             </form>
         </main>
